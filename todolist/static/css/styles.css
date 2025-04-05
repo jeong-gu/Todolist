@@ -1,0 +1,116 @@
+@font-face {
+    font-family: 'Chocolate Classical Sans';
+    src: url('fonts/ChocolateClassicalSans.ttf') format('truetype');
+}
+
+body {
+    font-family:'Chocolate Classical Sans',Arial, sans-serif;
+    background: linear-gradient(to bottom, #ffffff, #d0e7ff);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    left: 300px;
+    top: 64px;
+    width: 517px;
+    height: 154px;
+    border: 1px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-shadow: #000000;
+    font-family:  'Chocolate Classical Sans';
+    margin-bottom: 25px;
+    color: #3a589e;
+    font-size: 96px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.btn {
+    width: 313px;
+    height: 62px;
+    top: 325px;
+    left: 376px;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.primary {
+    background-color: #3a589e;
+    color: white;
+}
+
+.secondary {
+    background-color: #b3cde8;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+/* ✅ 메시지 전체 위치: 화면 상단 중앙에 고정 */
+.message-box {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: auto;
+    max-width: 90%;
+    text-align: center;
+    padding: 10px;
+}
+
+/* ✅ 기본 메시지 디자인 */
+.message {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 1;
+    animation: fadeInOut 4s ease-in-out forwards;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 에러 메시지 (예: 로그인 실패) */
+.message.error {
+    background-color: #ffe0e0;
+    color: #b00020;
+    border: 1px solid #b00020;
+}
+
+/* 성공 메시지 (예: 회원가입 성공) */
+.message.success {
+    background-color: #e0ffe0;
+    color: #007e33;
+    border: 1px solid #007e33;
+}
+
+/* ✅ 자연스럽게 사라지는 애니메이션 */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}

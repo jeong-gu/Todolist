@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List 메인</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <!-- 상단 바: 제목 및 사용자 정보 표시 -->
+    <div class="top-bar">
+        <h2 class="title">To Do List</h2>
+        <div class="user-info">
+            😊 {{ request.user.username }}님 /
+            <a href="{% url 'logout' %}">로그아웃</a>
+        </div>
+    </div>
+
+    <!-- 카드형 컨테이너 (todo, end todo, not end todo) -->
+    <div class="board-container">
+
+        <!-- [할 일 목록] 카드 -->
+        <div class="board todo">
+            <h3>to do</h3>
+            <!-- 새 할 일 추가 폼 -->
+            <form action="{% url 'main' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="새 할 일 추가" required>
+                <button type="submit">➕</button>
+            </form>
+
+            <!-- 할 일 목록 -->
+            <ul>
+                {% for todo in todos %}
+                    <li>
+                        <span>{{ todo.content }}</span>
+                        <span class="date">{{ todo.created_at|date:"Y.m.d (H:i)" }}</span>
+                        <a href="{% url 'complete_todo' todo.id %}">✔️</a>
+                        <a href="{% url 'delete_todo' todo.id %}">❌</a>
+                    </li>
+                {% empty %}
+                    <li>할 일이 없습니다.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- [완료한 목록] 카드 -->
+        <div class="board end-todo">
+            <h3>end to do</h3>
+            <ul>
+                {% for todo in completed_todos %}
+                    <li>
+                        <span>{{ todo.content }}</span>
+                    </li>
+                {% empty %}
+                    <li>완료한 할 일이 없습니다.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- [미완료 목록] 카드 (미분류 항목 또는 추가 기능 확장용) -->
+        <div class="board not-end-todo">
+            <h3>not end to do</h3>
+            <ul>
+                <li>아직 분류되지 않은 항목이 없습니다.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
