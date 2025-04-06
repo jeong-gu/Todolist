@@ -6,6 +6,7 @@ class Todo(models.Model):
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
+    completed_at = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.content} ({'완료' if self.completed else '미완료'})"

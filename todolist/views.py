@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -5,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Todo
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 
 # 처음 화면
 def index(request):
@@ -54,11 +56,15 @@ def main_view(request):
     if request.method == "POST":
         # 사용자가 새 할 일을 추가한 경우
         content = request.POST.get('content')
+        completed_at_raw = request.POST.get('completed_at')
         if content:
+            completed_at = datetime.strptime(completed_at_raw, '%Y-%m-%d').date()
+            
             Todo.objects.create(
                 user=request.user,
                 content=content,
-                created_at=timezone.now()
+                created_at=timezone.now(),
+                completed_at=completed_at
             )
             return redirect('main')  # 추가 후 새로고침
 

@@ -7,36 +7,35 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
-    <!-- 상단 바: 제목 및 사용자 정보 표시 -->
+    <!-- 상단 바 -->
     <div class="top-bar">
         <h2 class="title">To Do List</h2>
         <div class="user-info">
-            😊 {{ request.user.username }}님 /
+            {{ request.user.username }}님 /
             <a href="{% url 'logout' %}">로그아웃</a>
         </div>
     </div>
 
-    <!-- 카드형 컨테이너 (todo, end todo, not end todo) -->
+    <!-- 보드 컨테이너 -->
     <div class="board-container">
 
-        <!-- [할 일 목록] 카드 -->
+        <!-- To Do 카드 -->
         <div class="board todo">
-            <h3>to do</h3>
-            <!-- 새 할 일 추가 폼 -->
-            <form action="{% url 'main' %}" method="POST">
-                {% csrf_token %}
-                <input type="text" name="content" placeholder="새 할 일 추가" required>
-                <button type="submit">➕</button>
-            </form>
-
-            <!-- 할 일 목록 -->
+            <div class="board-header">
+                <h3>to do</h3>
+                <!-- 오른쪽 상단 ➕ 아이콘 -->
+                <button class="add-button" onclick="openModal()">➕</button>
+            </div>
             <ul>
                 {% for todo in todos %}
                     <li>
-                        <span>{{ todo.content }}</span>
-                        <span class="date">{{ todo.created_at|date:"Y.m.d (H:i)" }}</span>
-                        <a href="{% url 'complete_todo' todo.id %}">✔️</a>
-                        <a href="{% url 'delete_todo' todo.id %}">❌</a>
+                        <div class="left">
+                            <span>{{ todo.content }}</span>
+                            <span class="date">{{ todo.completed_at|date:"Y.m.d" }}까지</span>
+                        </div>
+                        <div class="right">
+                            <a href="{% url 'complete_todo' todo.id %}">⭕</a>
+                        </div>
                     </li>
                 {% empty %}
                     <li>할 일이 없습니다.</li>
@@ -44,13 +43,14 @@
             </ul>
         </div>
 
-        <!-- [완료한 목록] 카드 -->
+        <!-- End To Do 카드 -->
         <div class="board end-todo">
             <h3>end to do</h3>
             <ul>
                 {% for todo in completed_todos %}
                     <li>
                         <span>{{ todo.content }}</span>
+                        <a>✅</a>
                     </li>
                 {% empty %}
                     <li>완료한 할 일이 없습니다.</li>
@@ -58,14 +58,60 @@
             </ul>
         </div>
 
-        <!-- [미완료 목록] 카드 (미분류 항목 또는 추가 기능 확장용) -->
+        <!-- Not End To Do 카드 (추후 확장용) -->
         <div class="board not-end-todo">
             <h3>not end to do</h3>
             <ul>
-                <li>아직 분류되지 않은 항목이 없습니다.</li>
+                {% for todo in todos %}
+                    <li>
+                        <span>{{ todo.content }}</span>
+                        <a>⭕</a>
+                    </li>
+                {% empty %}
+                    <li>아직 분류되지 않은 항목이 없습니다.</li>
+                {% endfor %}
             </ul>
         </div>
 
     </div>
+    <!-- ✅ 모달 배경 -->
+    <div id="todoModal" class="modal hidden">
+        <div class="modal-content">
+        <!-- 닫기 버튼 -->
+        <div class="modal-header">
+            <span class="close" onclick="closeModal()">×</span>
+        </div>
+    
+        <!-- 폼 -->
+        <form action="{% url 'main' %}" method="POST">
+            {% csrf_token %}
+            
+            <!-- 입력 필드 -->
+            <h3><span style="color: #2b66e2; font-size: 10px;">●</span> TO DO 입력</h3>
+            <input type="text" name="content" placeholder="할 일 내용을 입력하세요" required
+                    style="width: 90%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+            <h3><span style="color: #2b66e2; font-size: 10px;">●</span> TO DO 기한 설정</h3>
+            <input type="text" name="completed_at"
+                placeholder=" "
+                onfocus="this.type='date'; this.showPicker();" required
+                style="width: 90%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+
+    
+            <div style="width: 100%; margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px;">
+                <button type="button" onclick="closeModal()" style="background: none; border: none; color: #888; font-size: 13px; cursor: pointer;">
+                    취소
+                </button>
+                <button type="submit" style="background: none; border: none; color: #2b66e2; font-size: 13px; font-weight: bold; cursor: pointer;">
+                    저장 후 닫기
+                </button>
+            </div>
+              
+        </form>
+        </div>
+    </div>
+  
+    
+<script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>

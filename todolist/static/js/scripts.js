@@ -23,3 +23,10 @@ function showMain() {
     signup.classList.add('hidden');
     main.classList.remove('hidden');
 }
+function openModal() {
+    document.getElementById('todoModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('todoModal').classList.add('hidden');
+}
