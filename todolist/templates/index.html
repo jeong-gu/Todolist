@@ -16,11 +16,10 @@
         {% endfor %}
     </div>
     {% endif %}
-    <h1>To Do List</h1>
-    <div>
-
+    <div class="container">
+        <h1>To Do List</h1>
         <!-- 메인 화면 -->
-        <div id="main">
+        <div id="main" class="btn_layout">
             <div><button class="btn primary" onclick="showLogin()">로그인 하기</button></div>
             <div><button class="btn secondary" onclick="showSignup()">회원가입 하기</button></div>
         </div>
@@ -29,23 +28,26 @@
         <div id="login" class="hidden">
             <form action="{% url 'login' %}" method="POST">
                 {% csrf_token %}
-                <input type="text" name="username" placeholder="아이디" required>
-                <input type="password" name="password" placeholder="패스워드" required>
-                <button type="submit" class="btn primary">로그인</button>
+                <h3>아이디</h3>
+                <input type="text" name="username" required>
+                <h3>패스워드</h3>
+                <input type="password" name="password" required>
+                <div class="container_confirm"><button type="submit" class="btn_confirm primary">로그인</button></div>
             </form>
-            <button class="btn secondary" onclick="showMain()">뒤로가기</button>
         </div>
 
         <!-- 회원가입 화면 -->
         <div id="signup" class="hidden">
             <form action="{% url 'signup' %}" method="POST">
                 {% csrf_token %}
-                <input type="text" name="username" placeholder="아이디" required>
-                <input type="password" name="password1" placeholder="패스워드" required>
-                <input type="password" name="password2" placeholder="패스워드 확인" required>
-                <button type="submit" class="btn primary">회원가입</button>
+                <h3>아이디</h3>
+                <input type="text" name="username" required>
+                <h3>패스워드</h3>
+                <input type="password" name="password1"  required>
+                <h3>패스워드 확인</h3>
+                <input type="password" name="password2"  required>
+                <div class="container_confirm"><button type="submit" class="btn_confirm primary">회원가입</button></div>
             </form>
-            <button class="btn secondary" onclick="showMain()">뒤로가기</button>
         </div>
 
     </div>
