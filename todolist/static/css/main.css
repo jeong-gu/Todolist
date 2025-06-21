@@ -11,6 +11,26 @@ body {
     color: #333;
 }
 
+
+.add-button {
+  background: none;
+  color:#3C70A9;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #2b55aa;
+}
+
+
 /* 상단 바 */
 .top-bar {
     display: flex;
@@ -40,7 +60,7 @@ body {
 
 /* 카드 스타일 공통 */
 .board {
-    background-color: #e3f0ff;
+    background-color: #D9EAFD;
     border-radius: 36px;
     padding: 20px;
     width: 260px;
@@ -55,7 +75,6 @@ body {
     color: #1e3c72;
     margin-top: 0;
     margin-bottom: 16px;
-    border-bottom: 2px solid #1e3c72;
     padding-bottom: 6px;
 }
 
@@ -64,6 +83,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #1e3c72;
+}
+
+.board-header h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #1e3c72;
 }
 
 /* 할 일 추가 폼 */
@@ -107,12 +136,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: #D9EAFD;
     padding: 10px 12px;
     margin-bottom: 10px;
     border-radius: 10px;
     font-size: 14px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 /* 왼쪽: 내용 + 날짜 */
