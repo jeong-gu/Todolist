@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Todo
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
+from django.utils.timezone import now
 
 # 처음 화면
 def index(request):
@@ -69,11 +70,13 @@ def main_view(request):
             return redirect('main')  # 추가 후 새로고침
 
     # 할 일 데이터 불러오기
-    todos = Todo.objects.filter(user=request.user, completed=False).order_by('-created_at')
+    todos = Todo.objects.filter(user=request.user, completed=False,completed_at__gte=now().date()).order_by('-created_at')
+    overdue_todos=Todo.objects.filter(user=request.user,completed=False,completed_at__lt=now().date()).order_by('-created_at')
     completed_todos = Todo.objects.filter(user=request.user, completed=True).order_by('-created_at')
 
     return render(request, 'main.html', {
         'todos': todos,
+        'overdue_todos':overdue_todos,
         'completed_todos': completed_todos,
     })
 

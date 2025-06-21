@@ -58,11 +58,11 @@
             </ul>
         </div>
 
-        <!-- Not End To Do 카드 (추후 확장용) -->
+        <!-- Not End To Do 카드   -->
         <div class="board not-end-todo">
             <h3>not end to do</h3>
             <ul>
-                {% for todo in todos %}
+                {% for todo in overdue_todos %}
                     <li>
                         <span>{{ todo.content }}</span>
                         <a>⭕</a>
