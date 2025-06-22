@@ -30,3 +30,22 @@ function openModal() {
 function closeModal() {
     document.getElementById('todoModal').classList.add('hidden');
 }
+
+function openDetailModal(id, content, completed_at) {
+    document.getElementById('detail-id').value = id;
+    document.getElementById('detail-content').value = content;
+    document.getElementById('detail-date').value = completed_at;
+
+    document.getElementById('detailModal').classList.remove('hidden');
+}
+
+function closeDetailModal() {
+    document.getElementById('detailModal').classList.add('hidden');
+}
+
+function deleteTodo() {
+    const id = document.getElementById('detail-id').value;
+    if (confirm("정말 삭제하시겠습니까?")) {
+        window.location.href = `/delete/${id}/`;  // 또는 {% url 'delete_todo' id %}와 같은 방식으로 서버 URL 지정
+    }
+}

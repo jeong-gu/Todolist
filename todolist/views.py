@@ -87,6 +87,20 @@ def delete_todo(request, todo_id):
     todo.delete()
     return redirect('main')
 
+@login_required
+def update_todo(request):
+    if request.method == 'POST':
+        todo_id = request.POST.get('id')
+        content = request.POST.get('content')
+        completed_at = request.POST.get('completed_at')
+
+        todo = get_object_or_404(Todo, id=todo_id,user=request.user)
+        todo.content = content
+        todo.completed_at = completed_at
+        todo.save()
+
+    return redirect('main')
+
 # 할 일 완료 처리 함수
 @login_required
 def complete_todo(request, todo_id):

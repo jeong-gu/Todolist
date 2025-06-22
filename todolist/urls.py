@@ -7,6 +7,7 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
     path('main/', views.main_view, name='main'),
-    path('delete/<int:todo_id>/', views.delete_todo, name='delete_todo'),  # 삭제
     path('complete/<int:todo_id>/', views.complete_todo, name='complete_todo'),  # 완료
+    path('delete/<int:todo_id>/', views.delete_todo, name='delete_todo'),  # 삭제
+    path('update/', views.update_todo, name='update_todo'),
 ]

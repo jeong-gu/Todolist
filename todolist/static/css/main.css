@@ -2,6 +2,12 @@
     font-family: 'Chocolate Classical Sans';
     src: url('fonts/ChocolateClassicalSans.ttf') format('truetype');
 }
+
+/* InterRegular 등록 */
+@font-face {
+  font-family: 'InterRegular';
+  src: url('../fonts/InterRegular.ttf') format('truetype');
+}
 /* 기본 배경과 글꼴 */
 body {
     font-family: 'Chocolate Classical Sans','Abhaya Libre ExtraBold','Segoe UI', sans-serif;
@@ -65,7 +71,6 @@ body {
     padding: 20px;
     width: 260px;
     min-height: 300px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* 카드 제목 */
@@ -95,35 +100,6 @@ body {
     color: #1e3c72;
 }
 
-/* 할 일 추가 폼 */
-.add-form {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-}
-
-.add-form input[type="text"] {
-    flex-grow: 1;
-    padding: 6px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.add-form button {
-    padding: 6px 12px;
-    background-color: #3a66c8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.add-form button:hover {
-    background-color: #2b55aa;
-}
-
 /* 할 일 목록 (ul) */
 .board ul {
     list-style: none;
@@ -151,8 +127,10 @@ body {
 }
 
 .board li .date {
-    font-size: 12px;
-    color: #666;
+    font-size: 10px;
+    color: #BCCCDC;
+    font-weight: 700;
+    font-family: 'InterRegular', sans-serif;
 }
 
 /* 오른쪽: 아이콘 */
@@ -178,7 +156,7 @@ body {
     color: #0052cc;
 }
 /* ✅ 모달 전체 배경 */
-.modal {
+/* .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -189,23 +167,22 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 999;
+} */
+.modal {
+    position: absolute; /* 화면 전체 덮지 않고 부모 기준 */
+    top: 25%; /* 위치를 리스트 위로 조정 */
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: none;
+    border-radius: 16px;
+    border-color: #225A98;
+    z-index: 1000;
 }
+
 
 /* ✅ 숨김 클래스 */
 .hidden {
     display: none;
-}
-
-/* 모달 전체 배경 */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
 }
 
 .hidden {
@@ -215,9 +192,10 @@ body {
 .modal-content {
   background: #F3F9FF;
   border-radius: 16px;
-  width: 360px;
-  padding: 24px 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  width: 450px;
+  height: 307px;
+  padding: 15px 20px 0px 20px;
+  border: 1px solid #225A98;
   position: relative;
 }
 
@@ -228,11 +206,19 @@ body {
   margin-bottom: 10px;
 }
 
-.modal-header .close {
+.modal-header{
+  position: absolute;
+  top: 16px;       /* 상단 패딩 */
+  right: 16px;     /* 우측 패딩 */
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   color: #333;
+}
+
+.close{
+  font-size: 15px;
+  color:red;
 }
 
 /* 폼 항목 */
@@ -293,4 +279,21 @@ body {
 
 .save-btn:hover {
   background: #1d4bb6;
+}
+
+.inputBox{
+  background: #E7F2FF;
+  border: none;
+  width: 80%; 
+  padding: 10px;
+  border-radius: 8px;
+
+  display: block;
+  margin: 0 auto; /* ✅ 수평 중앙 정렬 */
+  margin-bottom: 50px;
+}
+
+.modal h3{
+  font-size: 16px;
+  font-weight: 400;
 }
