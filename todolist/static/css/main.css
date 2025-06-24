@@ -6,7 +6,7 @@
 /* InterRegular 등록 */
 @font-face {
   font-family: 'InterRegular';
-  src: url('../fonts/InterRegular.ttf') format('truetype');
+  src: url('fonts/InterRegular.ttf') format('truetype');
 }
 /* 기본 배경과 글꼴 */
 body {
@@ -30,6 +30,8 @@ body {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  position: absolute;
+  right: 4.5px;
 }
 
 .add-button:hover {
@@ -46,16 +48,26 @@ body {
     font-size: 16px;
 }
 
-.top-bar .title {
+.top-bar {
     font-weight: bold;
     font-size: 24px;
     color: #1c3b70;
 }
 
+.title{
+  font-size: 20px;
+  color: #0F171F;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #151B22; /* x, y, blur, color */
+}
+
 .user-info {
     font-size: 14px;
 }
-
+.user-icon {
+  display: inline-flex;
+  transform: translate(3px,6px); /* 숫자 늘리면 더 내려감 */
+}
 /* 카드 3개를 담는 컨테이너 */
 .board-container {
     display: flex;
@@ -77,7 +89,7 @@ body {
 .board h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #1e3c72;
+    color: #151B22;
     margin-top: 0;
     margin-bottom: 16px;
     padding-bottom: 6px;
@@ -85,19 +97,28 @@ body {
 
 /* 카드 상단 제목 + 입력 폼을 함께 정렬 */
 .board-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    border-bottom: 2px solid #1e3c72;
+    /* margin-bottom: 16px; */
+    /* border-bottom: 2px solid #1e3c72; */
+    min-height: 36px; /* 버튼과 텍스트 정렬 높이 통일 */
 }
 
+.board-divider {
+    border: none;
+    height: 1px;
+    background-color: #225A98;
+    margin: 0 0 12px 0;
+}
 .board-header h3 {
     margin: 0;
     padding: 0;
     font-size: 16px;
     font-weight: bold;
-    color: #1e3c72;
+    color: #151B22;
+    text-shadow: 1px 1px 2px #151B22; /* x, y, blur, color */
 }
 
 /* 할 일 목록 (ul) */
@@ -155,19 +176,7 @@ body {
 .board li a:hover {
     color: #0052cc;
 }
-/* ✅ 모달 전체 배경 */
-/* .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-} */
+
 .modal {
     position: absolute; /* 화면 전체 덮지 않고 부모 기준 */
     top: 25%; /* 위치를 리스트 위로 조정 */
@@ -184,11 +193,6 @@ body {
 .hidden {
     display: none;
 }
-
-.hidden {
-  display: none;
-}
-
 .modal-content {
   background: #F3F9FF;
   border-radius: 16px;
@@ -296,4 +300,68 @@ body {
 .modal h3{
   font-size: 16px;
   font-weight: 400;
+}
+
+.detailModal{
+  position: absolute; /* 화면 전체 덮지 않고 부모 기준 */
+  top: 20%; /* 위치를 리스트 위로 조정 */
+  left: 3.5%;
+  background: none;
+  z-index: 1000;
+}
+
+.detailModal-content{
+  background: #F3F9FF;
+  border-radius: 16px;
+  width: 250px;
+  height: 285px;
+  padding: 15px 20px 10px 20px;
+  border: 1px solid #8A9197;
+  position: relative;
+}
+
+.underline-input {
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+  outline: none;
+  padding: 8px 4px;
+  font-size: 14px;
+  width: 90%;
+  display: block;
+  margin: 0 auto;
+  background: #F3F9FF;
+}
+
+.delModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.delModal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 1px;
+  border: 1px solid #225A98;
+  min-width: 280px;
+  margin-top: -300px;
+}
+
+.hidden {
+  display: none;
+
+}
+.input-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
