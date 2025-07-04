@@ -108,3 +108,11 @@ def complete_todo(request, todo_id):
     todo.completed = True
     todo.save()
     return redirect('main')
+
+# 할 일 완료 처리 함수
+@login_required
+def decomplete_todo(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id, user=request.user)
+    todo.completed = False
+    todo.save()
+    return redirect('main')

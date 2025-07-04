@@ -103,3 +103,48 @@ document.getElementById("confirmDeleteButton").addEventListener("click", functio
     }
 });
 
+    let decompleteTargetUrl = "";
+
+    function confirmDecomplete(element) {
+        const content = element.dataset.title;
+        decompleteTargetUrl = element.dataset.url;
+
+        document.getElementById('todo-title').innerText = content;
+        document.getElementById('todo-title-again').innerText = content;
+
+        document.getElementById('confirmDecompleteModal').classList.remove('hidden');
+    }
+
+    function closeDecompleteModal() {
+        document.getElementById('confirmDecompleteModal').classList.add('hidden');
+        decompleteTargetUrl = "";
+    }
+
+    document.getElementById('confirm-decomplete-yes').addEventListener('click', function () {
+        if (decompleteTargetUrl) {
+            window.location.href = decompleteTargetUrl;
+        }
+    });
+
+    function openEditModal() {
+        const id = document.getElementById("detail-id").value;
+        const content = document.getElementById("detail-content").value;
+        let rawDate = document.getElementById("detail-date").value;
+
+        if (rawDate.includes('까지')) {
+            rawDate = rawDate.replace('까지', '').trim();
+        }
+        if (rawDate.includes('.')) {
+            rawDate = rawDate.replaceAll('.', '-').trim();
+        }
+
+        document.getElementById("edit-id").value = id;
+        document.getElementById("edit-content").value = content;
+        document.getElementById("edit-date").value = rawDate;
+
+        document.getElementById("editModal").classList.remove("hidden");
+    }
+    
+    function closeEditModal() {
+        document.getElementById("editModal").classList.add("hidden");
+    }

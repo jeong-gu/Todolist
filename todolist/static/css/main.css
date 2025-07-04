@@ -78,6 +78,7 @@ body {
 
 /* 카드 스타일 공통 */
 .board {
+    position: relative;
     background-color: #D9EAFD;
     border-radius: 36px;
     padding: 20px;
@@ -179,7 +180,7 @@ body {
 
 .modal {
     position: absolute; /* 화면 전체 덮지 않고 부모 기준 */
-    top: 25%; /* 위치를 리스트 위로 조정 */
+    top: 35%; /* 위치를 리스트 위로 조정 */
     left: 50%;
     transform: translate(-50%,-50%);
     background: none;
@@ -250,6 +251,7 @@ body {
   border: 1px solid #ccc;
   background: #f0f6ff;
   font-size: 14px;
+  font-weight: bold;
 }
 
 /* 버튼 영역 */
@@ -304,8 +306,8 @@ body {
 
 .detailModal{
   position: absolute; /* 화면 전체 덮지 않고 부모 기준 */
-  top: 20%; /* 위치를 리스트 위로 조정 */
-  left: 3.5%;
+  top: 15.5px; /* 위치를 리스트 위로 조정 */
+  left: 4.5px;
   background: none;
   z-index: 1000;
 }
@@ -325,20 +327,21 @@ body {
   border-bottom: 1.5px solid #ccc;
   outline: none;
   padding: 8px 4px;
-  font-size: 14px;
+  font-size: 16px;
   width: 90%;
   display: block;
   margin: 0 auto;
   background: #F3F9FF;
+  font-family: 'InterRegular', sans-serif;
+  font-weight: 700;
 }
 
 .delModal {
   position: fixed;
-  top: 0;
+  top: 100px;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -364,4 +367,17 @@ body {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+
+.modal-title {
+  display: block;
+  width: fit-content;        /* ✅ 내용 크기만큼만 차지 */
+  margin: 0 auto;            /* ✅ 가로 중앙 정렬 */
+  background-color: #225A98;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 400;
 }

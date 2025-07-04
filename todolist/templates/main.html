@@ -53,9 +53,56 @@
                         </div>
                     </li>
                 {% empty %}
-                    <li>할 일이 없습니다.</li>
+                    <li> </li>
                 {% endfor %}
             </ul>
+            <!-- ✅ 상세 모달 -->
+            <div id="detailModal" class="detailModal hidden">
+                <div class="detailModal-content">
+                    <div class="back-button" onclick="closeDetailModal()">
+                    <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.66667 10.9166L0.25 5.49992L5.66667 0.083252L6.62812 1.04471L2.17292 5.49992L6.62812 9.95513L5.66667 10.9166Z" fill="#3C70A9"/>
+                    </svg>
+                    </div>    
+
+                    <!-- ✅ TO DO 제목 -->
+                    <div class="modal-title">TO Do</div>
+
+                    <form id="detailForm" method="POST" action="{% url 'update_todo' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="detail-id" name="id">
+
+                        <h3 style="color:#3C70A9; font-size: 12px; margin-top: 25px; margin-bottom:3px;">
+                            <span style="font-size: 6px; margin-left: 12px;">●</span> to do
+                        </h3>
+                        <input type="text" id="detail-content" name="content" required class="underline-input">
+
+                        <h3 style="color:#3C70A9; font-size: 12px; margin-top: 25px; margin-bottom:3px;">
+                            <span style="font-size: 6px; margin-left: 12px;">●</span> 기한
+                        </h3>
+                        <input type="text"
+                            class="underline-input"
+                            name="completed_at"
+                            id="detail-date"
+                            placeholder=" "/>
+
+                        <div style="width: 100%; position: absolute; right: 20px; bottom: 20px; display: flex; gap: 12px; justify-content: flex-end">
+                            <button type="button"
+                                    onclick="openEditModal()"
+                                    style="background: none; border: none; color: #225A98; font-size: 13px; font-weight: 400; cursor: pointer;">
+                                수정
+                            </button>
+                            <button type="button"
+                                    onclick="openDeleteModal(document.getElementById('detail-id').value)"
+                                    style="background: none; border: none; color: #E14C4F; font-weight:400; font-size: 13px; cursor: pointer;">
+                                삭제
+                            </button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
         </div>
 
         <!-- End To Do 카드 -->
@@ -67,18 +114,28 @@
             <ul>
                 {% for todo in completed_todos %}
                     <li>
-                        <span style="font-weight:800;"
-                        onclick="openDetailModal({{ todo.id }}, '{{ todo.content }}', '{{ todo.completed_at }}')" >
+                        <span style="font-weight:800;">
                             {{ todo.content }}
                         </span>
-                        <!-- 예시 -->
-                        <svg xmlns="http://www.w3.org/2000/svg" color="#3C70A9" width="15px" height="15px" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C5.375 0 0 5.375 0 12s5.375 12 12 12 12-5.375 12-12S18.625 0 12 0zm-1.125 18L5.25 12.375l1.687-1.688 4.063 4.063 6.063-6.063 1.687 1.688L10.875 18z"/>
-                        </svg>
-
+                        <div class="right">
+                            <a href="#"
+                            class="complete-icon"
+                            data-url="{% url 'decomplete_todo' todo.id %}"
+                            data-title="{{ todo.content|escapejs }}"
+                            onclick="confirmDecomplete(this); return false;">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    color="#3C70A9"
+                                    width="15px"
+                                    height="15px"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path d="M12 0C5.375 0 0 5.375 0 12s5.375 12 12 12 12-5.375 12-12S18.625 0 12 0zm-1.125 18L5.25 12.375l1.687-1.688 4.063 4.063 6.063-6.063 1.687 1.688L10.875 18z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </li>
                 {% empty %}
-                    <li>완료한 할 일이 없습니다.</li>
+                    <li> </li>
                 {% endfor %}
             </ul>
         </div>
@@ -101,13 +158,13 @@
 
                     </li>
                 {% empty %}
-                    <li>아직 분류되지 않은 항목이 없습니다.</li>
+                    <li> </li>
                 {% endfor %}
             </ul>
         </div>
 
     </div>
-    <!-- ✅ 모달 배경 -->
+    <!-- 모달 배경 -->
     <div id="todoModal" class="modal hidden">
         <div class="modal-content">
         <!-- 닫기 버튼 -->
@@ -148,55 +205,24 @@
         </div>
     </div>
 
-    <!-- ✅ 상세 모달 -->
-    <div id="detailModal" class="detailModal hidden">
-        <div class="detailModal-content">
-            <div class="back-button" onclick="closeDetailModal()">
-            <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.66667 10.9166L0.25 5.49992L5.66667 0.083252L6.62812 1.04471L2.17292 5.49992L6.62812 9.95513L5.66667 10.9166Z" fill="#3C70A9"/>
-            </svg>
-            </div>    
-
-            <!-- ✅ TO DO 제목 -->
-            <div class="modal-title">TO DO</div>
-
-            <form id="detailForm" method="POST" action="{% url 'update_todo' %}">
-                {% csrf_token %}
-                <input type="hidden" id="detail-id" name="id">
-
-                <h3 style="color:#3C70A9; font-size: 12px;">
-                    <span style="font-size: 9px; margin-left: 12px;">●</span> to do
-                </h3>
-                <input type="text" id="detail-content" name="content" required class="underline-input">
-
-                <h3 style="color:#3C70A9; font-size: 12px;">
-                    <span style="font-size: 9px; margin-left: 12px;">●</span> 기한
-                </h3>
-                <input type="text"
-                    class="underline-input"
-                    name="completed_at"
-                    id="detail-date"
-                    placeholder=" "
-                    onfocus="activateDatePicker(this)"
-                    required />
-
-                <div style="width: 100%; position: absolute; right: 20px; bottom: 20px; display: flex; gap: 12px; justify-content: flex-end">
-                    <button type="submit"
-                        style="background: none; border: none; color: #225A98; font-size: 13px; font-weight: 400; cursor: pointer;">
-                        수정
-                    </button>
-                    <button type="button"
-                            onclick="openDeleteModal(document.getElementById('detail-id').value)"
-                            style="background: none; border: none; color: #E14C4F; font-weight:400; font-size: 13px; cursor: pointer;">
-                        삭제
-                    </button>
-                </div>
-            </form>
-
-
+    
+    <!-- 되돌리기 확인 모달 -->
+    <div id="confirmDecompleteModal" class="delModal hidden">
+        <div class="delModal-content">
+            <p style="font-size: 16px; font-weight: 600; margin-top:-5px; margin-left:5px; margin-bottom:5px;">
+                <strong id="todo-title"></strong>를(을) to do 상태로 바꾸시겠습니까?
+            </p>
+            <p style="font-size: 13px; color: #777;margin-top:-1px; margin-left:6px; margin-bottom:70px;">
+                바꿀 경우 <strong id="todo-title-again"></strong>는(은) to do 목록에 표시됩니다.
+            </p>
+            <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 16px;">
+                <button onclick="closeDecompleteModal()" style="margin-right: -13px; margin-bottom: -10px; border: none; background: none; cursor: pointer; color:#8A9197;">아니오</button>
+                <button id="confirm-decomplete-yes" style="margin-right: -13px; margin-bottom: -10px; color: #225A98; border: none; background: none; cursor: pointer;">예</button>
+            </div>
         </div>
     </div>
 
+    <!--삭제모달-->
     <div id="deleteConfirmModal" class="delModal hidden">
         <div class="delModal-content">
             <p style="font-size: 16px; font-weight: 600; margin-top:-5px; margin-left:5px; margin-bottom:5px;">정말로 삭제하시겠습니까?</p>
@@ -207,7 +233,40 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- 수정 팝업 -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+        <!-- 닫기 버튼 -->
+        <div class="modal-header">
+            <span class="close" onclick="closeEditModal()">×</span>
+        </div>
+            <form id="editForm" method="POST" action="{% url 'update_todo' %}">
+                {% csrf_token %}
+                <input type="hidden" id="edit-id" name="id">
+
+                <h3><span style="color: #2b66e2; font-size: 9px; margin-left: 32px;">●</span>
+                 TO DO <span style="font-weight: 800;">입력</span></h3>
+                <input type="text" class="inputBox"id="edit-content" name="content" style="color:#BCCCDC;" required > 
+                
+
+                <h3><span style="color: #2b66e2; font-size: 9px; margin-left: 32px;">●</span>
+                 TO DO <span style="font-weight: 800;">기한 설정</h3>
+                <input type="text" class="inputBox" id="edit-date" name="completed_at" style="color:#BCCCDC;"
+                    placeholder="날짜를 선택하세요"
+                    onfocus="this.type='date'; this.showPicker();" required />
+
+                <div style="width: 100%; position: absolute; right: 20px; bottom: 20px; display: flex; gap: 12px; justify-content: flex-end">
+                    <button type="button" onclick="closeEditModal()" style="background: none; border: none; color: #888; font-weight:400; font-size: 13px; cursor: pointer;">
+                        취소
+                    </button>
+                    <button type="submit" style="background: none; border: none; color: #2b66e2; font-size: 13px; font-weight: 400; cursor: pointer;">
+                        저장 후 닫기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     
 <script src="{% static 'js/scripts.js' %}"></script>
 </body>
